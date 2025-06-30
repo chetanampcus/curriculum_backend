@@ -1,4 +1,3 @@
-// src/main/java/com/highscope/curriculum/service/UserService.java
 package com.highscope.curriculum.service;
 
 import com.highscope.curriculum.dto.UserDTO;
@@ -7,7 +6,6 @@ import com.highscope.curriculum.model.User;
 import com.highscope.curriculum.repository.RoleRepository;
 import com.highscope.curriculum.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
 
     public User createUser(UserDTO request) {
         Role role = roleRepository.findById(request.getRoleId().longValue())
@@ -24,7 +21,7 @@ public class UserService {
         User user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
-                .passwordHash(passwordEncoder.encode(request.getPassword()))
+                .passwordHash(request.getPassword()) // store as plain text
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .phoneNumber(request.getPhoneNumber())
