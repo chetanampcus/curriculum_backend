@@ -1,0 +1,1 @@
+ALTER TABLE organizations ADD has_service_centers BOOLEAN;
